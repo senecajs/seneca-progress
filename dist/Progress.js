@@ -1,5 +1,5 @@
 "use strict";
-/* Copyright © 2022 Seneca Project Contributors, MIT License. */
+/* Copyright © 2026 Seneca Project Contributors, MIT License. */
 Object.defineProperty(exports, "__esModule", { value: true });
 // Default options.
 const defaults = {
@@ -23,33 +23,32 @@ function Progress(options) {
         .message('get:progress', params.GetProgress, msgGetProgress)
         .message('list:progress', params.ListProgress, msgListProgress);
     // TODO: seneca.prepare should not be affected by seneca.fix
-    seneca
-        .prepare(prepare);
+    seneca.prepare(prepare);
     // class SkipNumber extends Number { skip = true }
-    // Deliberately not importing Gubu, instead using Gubu expressions as an example. 
+    // Deliberately not importing Gubu, instead using Gubu expressions as an example.
     function makeParams() {
         return {
             CreateProgress: {
-                kind: String,
-                id$: Skip(String),
-                step: Skip(0),
-                start: Skip(0),
-                end: Skip(0),
-                code: Skip(String),
-                owner: Skip(String),
-                ref: Skip(String),
-                user_id: Skip(String),
-                custom: Skip(Object),
-                note: Skip(String),
+                kind: String, // Categorize this progress instance, required.
+                id$: Skip(String), // Custom id, otherwise generated entity id.
+                step: Skip(0), // Step size; Undefined (skipped) means use default from options.
+                start: Skip(0), // Start value; Undefined (skipped) means use default from options.
+                end: Skip(0), // Start value; Undefined (skipped) means use default from options.
+                code: Skip(String), // Custom code string.
+                owner: Skip(String), // Reference to the "owner" (E.g. an entity id).
+                ref: Skip(String), // Reference to an associated entity.
+                user_id: Skip(String), // Reference to an associated user.
+                custom: Skip(Object), // Custom data.
+                note: Skip(String), // Custom note string.
                 expire: Skip(Number), // Expires in millis fron now.
             },
             UpdateProgress: {
                 id: String,
-                how: Exact('step', 'val', 'set'),
+                how: Exact('step', 'val', 'set'), // step=>incr by step value, val=>custom value.
                 val: Skip(Number),
-                status: Skip(String),
-                code: Skip(String),
-                custom: Skip(Object),
+                status: Skip(String), // Set status manually.
+                code: Skip(String), // Custom code string for Entry.
+                custom: Skip(Object), // Custom data for Entry.
                 note: Skip(String), // Custom note string for Entry.
             },
             GetProgress: {
@@ -150,7 +149,7 @@ function Progress(options) {
             }
             entry = await entry.save$({
                 status: progress.status,
-                val: progress.val
+                val: progress.val,
             });
             progress = await progress.save$();
             out.item = progress;
@@ -204,7 +203,7 @@ function Progress(options) {
         if (full) {
             const eq = {
                 progress_id: progress.id,
-                sort$: { 'when': 1 }
+                sort$: { when: 1 },
             };
             const list = await makeEntryEnt(seneca).list$(eq);
             return list;
@@ -213,7 +212,7 @@ function Progress(options) {
     }
     async function checkExpired(progress) {
         if ('active' == progress.status &&
-            Date.now() < (progress.when + progress.expire)) {
+            Date.now() < progress.when + progress.expire) {
             progress.status = 'expired';
             await progress.save$();
         }
@@ -226,7 +225,7 @@ function Progress(options) {
         return seneca.entity('sys/progressentry');
     }
     return {
-        exports: {}
+        exports: {},
     };
 }
 Object.assign(Progress, { defaults });

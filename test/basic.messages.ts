@@ -31,10 +31,7 @@ export default {
       },
     },
     */
-
     // Print entire database
     // { print: true, pattern: 'biz:null,role:mem-store,cmd:dump' },
-
   ],
 }
-

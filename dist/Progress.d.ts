@@ -9,3 +9,4 @@ declare function Progress(this: any, options: ProgressOptions): {
     exports: {};
 };
 export default Progress;
+//# sourceMappingURL=Progress.d.ts.map
