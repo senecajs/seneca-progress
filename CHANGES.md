@@ -25,4 +25,5 @@ history.
 * The committed `dist-test/` is the plain TypeScript output, and Prettier
   leaves it alone, so `npm run build` changes no tracked file.
 * `repository.url` uses `git+https`, `publishConfig` sets public access, and
-  the package includes `CHANGES.md`.
+  the package includes `CHANGES.md` but not the TypeScript build information
+  file `dist/tsconfig.tsbuildinfo`, which the build now writes into `dist/`.
