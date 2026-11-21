@@ -25,7 +25,7 @@ function Progress(options) {
     // TODO: seneca.prepare should not be affected by seneca.fix
     seneca.prepare(prepare);
     // class SkipNumber extends Number { skip = true }
-    // Deliberately not importing Gubu, instead using Gubu expressions as an example.
+    // Deliberately not importing shape: uses the builders Seneca provides (seneca.valid).
     function makeParams() {
         return {
             CreateProgress: {

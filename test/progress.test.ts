@@ -18,8 +18,7 @@ describe('progress', () => {
     expect(ProgressDoc).exist()
     const seneca = Seneca({ legacy: false })
       .test()
-      .use('promisify')
-      .use('entity')
+      .use('@seneca/entity')
       .use(Progress)
     await seneca.ready()
   })
@@ -169,9 +168,8 @@ async function makeSeneca(options?: any) {
   options = options || {}
   const seneca = Seneca({ legacy: false })
     .test()
-    .use('promisify')
-    .use('entity')
-    .use('entity-util', { when: { active: true, human: 'y' } })
+    .use('@seneca/entity')
+    .use('@seneca/entity-util', { when: { active: true, human: 'y' } })
     .use(Progress, options.progress)
 
   await seneca.ready()
