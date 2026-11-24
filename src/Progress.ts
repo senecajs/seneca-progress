@@ -50,7 +50,7 @@ function Progress(this: any, options: ProgressOptions) {
 
   // class SkipNumber extends Number { skip = true }
 
-  // Deliberately not importing Gubu, instead using Gubu expressions as an example.
+  // Deliberately not importing shape: uses the builders Seneca provides (seneca.valid).
   function makeParams() {
     return {
       CreateProgress: {
